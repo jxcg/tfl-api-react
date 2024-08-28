@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Interface from './Interface'
+import Search from './Components/Search'
 
 function App() {
 
   return (
     <>
-    <Interface />
+    <Search />
     </>
   )
 }

@@ -1,8 +1,10 @@
 import React from 'react'
-export default function Interface() {
+import '../Search.css';
+export default function Search() {
     const [trainLine, setTrainLine] = React.useState('')
     const [trainData, setTrainData] = React.useState({})
     const [isLoading, setLoading] = React.useState(false)
+    const [isValidName, setIsValidData] = React.useState();
 
     // STRUCTURE
     /* get user data from interface.jsx
@@ -18,13 +20,24 @@ export default function Interface() {
         if (trainLine) {
             setLoading(true)
             const apiURL = `https://api.tfl.gov.uk/Line/${trainLine}/status`
+        
+            console.log(apiURL)
+
             try {
+                
                 const response = await fetch(apiURL)
                 const data = await response.json();
-                setTrainData(data);
+                if (response.status === 404) {
+                    setIsValidData(false);
+                    console.log("This is false")
+                }
+                else {
+                    setTrainData(data);
+                    setIsValidData(true);
+                }
             }
             catch (error) {
-                console.log(error)
+                console.log("ERROR: ",error)
             }
             finally {
                 setLoading(false)
@@ -44,7 +57,7 @@ export default function Interface() {
 
     return (
         <>
-        <h1>Train Line Data</h1>
+        {isLoading ? <h1>Searching for {trainLine} Line</h1> : <h1>London Underground Train Line Data</h1>}
         <div className='search-bar'>
             <form onSubmit={handleSubmit}>
                 <input 
@@ -55,6 +68,7 @@ export default function Interface() {
                     onChange={handleChange}
                     />
             </form>
+            {isValidName && <h2>Data for the {trainLine} Line exists and is valid</h2>}
             </div>
         </>
     )
