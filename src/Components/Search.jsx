@@ -4,7 +4,8 @@ export default function Search() {
     const [trainLine, setTrainLine] = React.useState('')
     const [trainData, setTrainData] = React.useState({})
     const [isLoading, setLoading] = React.useState(false)
-    const [isValidName, setIsValidData] = React.useState();
+    const [isValidData, setIsValidData] = React.useState();
+    const [submitted, setSubmitted] = React.useState(false);
 
     // STRUCTURE
     /* get user data from interface.jsx
@@ -31,7 +32,7 @@ export default function Search() {
                     console.log("This is false")
                 }
                 else {
-                    setTrainData(data);
+                    setTrainData(data[0]); // index at 0
                     setIsValidData(true);
                 }
             }
@@ -40,6 +41,7 @@ export default function Search() {
             }
             finally {
                 setLoading(false)
+                setSubmitted(true)
             }
         }
     }
@@ -47,6 +49,7 @@ export default function Search() {
     React.useEffect(() => {
         if (trainData) {
             console.log(trainData)
+
         }
         else {
             console.log('promise not resolved YET')
@@ -56,7 +59,7 @@ export default function Search() {
 
     return (
         <>
-        {isLoading ? <h1>Searching for {trainLine} Line</h1> : <h1>London Underground Train Line Data</h1>}
+        <h1>TFL Train Service</h1>
         <div className='search-bar-container'>
             <form onSubmit={handleSubmit}>
                 <input 
@@ -68,8 +71,15 @@ export default function Search() {
                     className='search-bar'
                     />
             </form>
-            {isValidName && <h2>Data for the {trainLine} Line exists and is valid</h2>}
             </div>
+            {isLoading && submitted && <p>Loading data</p>}
+            {!isLoading && !isValidData && submitted && <p>Invalid Train Line</p>}
+            {!isLoading && isValidData && trainData && submitted &&(
+                <div>
+                    <p>data loaded!</p>
+                    <h1>Line Status</h1>
+                </div>
+            )}
         </>
     )
 }
