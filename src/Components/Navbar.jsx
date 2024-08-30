@@ -6,7 +6,7 @@ export default function Navbar() {
         <>
         <ul className='nav-bar'>
             <div className='nav-item-list'>
-                <button><a href=''>Home</a></button>
+                <button><Link to="/">Home</Link></button> 
                 <button><Link to="/Unified">All Lines</Link></button> 
                 <button><Link to="/Search">Search</Link></button> 
             </div>
