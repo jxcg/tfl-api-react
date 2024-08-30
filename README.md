@@ -1,3 +1,3 @@
 # React in Vite (TFL API Application)
 
-Application which makes requests to TFL's api
+A pretty incompetent take on an application which makes requests to TFL's api
