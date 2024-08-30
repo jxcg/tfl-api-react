@@ -24,7 +24,6 @@ export default function Search() {
             console.log(apiURL)
 
             try {
-                
                 const response = await fetch(apiURL)
                 const data = await response.json();
                 if (response.status === 404) {
@@ -58,7 +57,7 @@ export default function Search() {
     return (
         <>
         {isLoading ? <h1>Searching for {trainLine} Line</h1> : <h1>London Underground Train Line Data</h1>}
-        <div className='search-bar'>
+        <div className='search-bar-container'>
             <form onSubmit={handleSubmit}>
                 <input 
                     type='text'
@@ -66,6 +65,7 @@ export default function Search() {
                     value={trainLine}
                     name='train-line-search'
                     onChange={handleChange}
+                    className='search-bar'
                     />
             </form>
             {isValidName && <h2>Data for the {trainLine} Line exists and is valid</h2>}
