@@ -49,6 +49,7 @@ export default function Search() {
     React.useEffect(() => {
         if (trainData) {
             console.log(trainData)
+            //console.log(trainData.lineStatuses[0].statusSeverityDescription)
 
         }
         else {
@@ -59,7 +60,7 @@ export default function Search() {
 
     return (
         <>
-        <h1>TFL Train Service</h1>
+        <h1 className='title'>TFL Train Service</h1>
         <div className='search-bar-container'>
             <form onSubmit={handleSubmit}>
                 <input 
@@ -72,12 +73,14 @@ export default function Search() {
                     />
             </form>
             </div>
-            {isLoading && submitted && <p>Loading data</p>}
+            {isLoading && submitted && <h1>Loading data</h1>}
             {!isLoading && !isValidData && submitted && <p>Invalid Train Line</p>}
             {!isLoading && isValidData && trainData && submitted &&(
-                <div>
-                    <p>data loaded!</p>
-                    <h1>Line Status</h1>
+                <div className='train-details-container'>
+                    <h1 className='title' id='line-status'>Line Status</h1>
+                    <p className='line-details'>Train Line: {trainData.name}</p>
+                    <p className='line-details'> {trainData.lineStatuses[0].statusSeverityDescription}</p>
+
                 </div>
             )}
         </>
