@@ -7,6 +7,30 @@ export default function Search() {
     const [isValidData, setIsValidData] = React.useState();
     const [submitted, setSubmitted] = React.useState(false);
 
+    const trainStatus = {
+        '0': 'Special Service',
+        '1': 'Closed',
+        '2': 'Suspended',
+        '3': 'Part Suspended',
+        '4': 'Planned Closure',
+        '5': 'Part Closure',
+        '6': 'Severe Delays',
+        '7': 'Reduced Service',
+        '8': 'Bus Service',
+        '9': 'Minor Delays',
+        '10': 'Good Service',
+        '11': 'Part Closed',
+        '12': 'Exit Only',
+        '13': 'No Step Free Access',
+        '14': 'Change of Frequency',
+        '15': 'Diverted',
+        '16': 'Not Running',
+        '17': 'Issues Reported',
+        '18': 'No Issues',
+        '19': 'Information',
+        '20': 'No Service',
+    }
+
     // STRUCTURE
     /* get user data from interface.jsx
     pass data down to View
@@ -48,14 +72,13 @@ export default function Search() {
 
     React.useEffect(() => {
         if (trainData) {
-            console.log(trainData)
             //console.log(trainData.lineStatuses[0].statusSeverityDescription)
-
         }
         else {
             console.log('promise not resolved YET')
         }
     }, [trainData]) // log when train data updats
+
 
 
     return (
@@ -76,10 +99,12 @@ export default function Search() {
             {isLoading && submitted && <h1>Loading data</h1>}
             {!isLoading && !isValidData && submitted && <p>Invalid Train Line</p>}
             {!isLoading && isValidData && trainData && submitted &&(
+
                 <div className='train-details-container'>
                     <h1 className='title' id='line-status'>Line Status</h1>
                     <p className='line-details'>Train Line: {trainData.name}</p>
-                    <p className='line-details'> {trainData.lineStatuses[0].statusSeverityDescription}</p>
+                    <p className='line-details'> {trainStatus[trainData.lineStatuses[0].statusSeverity]}</p>
+                    <p className='line-details'> {trainData.serviceTypes[1]?.name ? 'Night Tube ✅' : ''}</p>
 
                 </div>
             )}
